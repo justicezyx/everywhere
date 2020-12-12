@@ -8,5 +8,8 @@ Programming on single machine, cluster, and everywhere!
   * Configure docker:
     ```
     $ brew cask install virtualbox
+    # Needs to enable virtual box:
+    # System Preferences → Security & Privacy → General
+    $ docker-machine create default
     ```
 * Install bazel: https://docs.bazel.build/versions/master/install-os-x.html#install-with-installer-mac-os-x
