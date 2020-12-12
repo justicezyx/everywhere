@@ -1,0 +1,6 @@
+load("@io_bazel_rules_docker//go:image.bzl", "go_image")
+
+go_image(
+    name = "http_server_image",
+    srcs = ["http_server.go"],
+)
