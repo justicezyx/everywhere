@@ -5,7 +5,6 @@ Programming on single machine, cluster, and everywhere!
 ## Setup dev environment on Mac
 
 * Install docker: https://docs.docker.com/docker-for-mac/install/
-
 ** Configure docker:
 
 ```
