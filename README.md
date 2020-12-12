@@ -6,7 +6,7 @@ Programming on single machine, cluster, and everywhere!
 
 * Install docker: https://docs.docker.com/docker-for-mac/install/
   * Configure docker:
-```
-$ brew cask install virtualbox
-```
+    ```
+    $ brew cask install virtualbox
+    ```
 * Install bazel: https://docs.bazel.build/versions/master/install-os-x.html#install-with-installer-mac-os-x
