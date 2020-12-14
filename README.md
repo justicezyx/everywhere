@@ -14,3 +14,4 @@ Programming on single machine, cluster, and everywhere!
     ```
 * Install bazel: https://docs.bazel.build/versions/master/install-os-x.html#install-with-installer-mac-os-x
 * Install bazel docker rules: https://github.com/bazelbuild/rules_docker
+* Install kind: https://kind.sigs.k8s.io/
