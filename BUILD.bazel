@@ -5,6 +5,13 @@ load("@bazel_gazelle//:def.bzl", "gazelle")
 # gazelle:prefix github.com/justicezyx/everywhere
 gazelle(name = "gazelle")
 
+go_library(
+    name = "go_default_library",
+    srcs = ["http_server.go"],
+    importpath = "github.com/justicezyx/everywhere",
+    visibility = ["//visibility:private"],
+)
+
 go_binary(
     name = "http_server",
     embed = [":go_default_library"],
@@ -16,9 +23,3 @@ go_image(
     binary = ":http_server",
 )
 
-go_library(
-    name = "go_default_library",
-    srcs = ["http_server.go"],
-    importpath = "github.com/justicezyx/everywhere",
-    visibility = ["//visibility:private"],
-)
