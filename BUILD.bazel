@@ -22,4 +22,3 @@ go_image(
     name = "http_server_image",
     binary = ":http_server",
 )
-
