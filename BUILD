@@ -26,6 +26,8 @@ go_image(
 
 # TODO(yzhao): This does not work yet. As the produced image cannot be executed
 # with docker run, but kind actually can execute it on the local cluster.
+# https://github.com/kubernetes-sigs/kind/issues/1984
+# https://github.com/bazelbuild/rules_docker/issues/1701
 container_push(
     name = "push_http_server_image",
     image = ":http_server_image",
