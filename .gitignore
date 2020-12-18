@@ -15,12 +15,12 @@
 # vendor/
 
 # Bazel system directories
-bazel-bin
-bazel-everywhere
-bazel-out
-bazel-testlogs
+/bazel-bin
+/bazel-everywhere
+/bazel-out
+/bazel-testlogs
 
 # Binary produced
-everywhere
-k8s
-test.sh
+/everywhere
+/k8s
+/test.sh
