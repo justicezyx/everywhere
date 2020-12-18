@@ -19,3 +19,7 @@ bazel-bin
 bazel-everywhere
 bazel-out
 bazel-testlogs
+
+# Binary produced
+everywhere
+k8s
