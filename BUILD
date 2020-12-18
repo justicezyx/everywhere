@@ -1,4 +1,5 @@
 load("@io_bazel_rules_docker//go:image.bzl", "go_image")
+load("@io_bazel_rules_docker//container:container.bzl", "container_push")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 load("@bazel_gazelle//:def.bzl", "gazelle")
 
@@ -21,4 +22,15 @@ go_binary(
 go_image(
     name = "http_server_image",
     binary = ":http_server",
+)
+
+# TODO(yzhao): This does not work yet. As the produced image cannot be executed
+# with docker run, but kind actually can execute it on the local cluster.
+container_push(
+    name = "push_http_server_image",
+    image = ":http_server_image",
+    registry = "localhost:5000",
+    format = "Docker",
+    repository = "http_server",
+    tag = "{BUILD_USER}",
 )
