@@ -16,3 +16,19 @@ Programming on single machine, cluster, and everywhere!
 * Install bazel docker rules: https://github.com/bazelbuild/rules_docker
 * Install kind: https://kind.sigs.k8s.io/
 * Setup local registry: https://kind.sigs.k8s.io/docs/user/local-registry/
+
+## TODO
+
+* Shell script to automate the build, deploy on local Kind cluster.
+* [Chris] Have a dedicated agent on K8s cluster to accept application
+  deployment requests.
+  * The development process during the development of k8s applications.
+* Continue on the service automation direction. For now.
+  * Create service object.
+  * Start auto-scaling.
+* Take a look at Operator framework.
+
+## Discussion
+
+* What really is useful for developers?
+  * Get started with service management
