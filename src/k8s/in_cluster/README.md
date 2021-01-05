@@ -1,10 +1,12 @@
-`kubectl apply -f rbac.yaml`
-This is needed to grant permission for the in_cluster_launcher's pod to access cluster objects.
+# In-cluster launcher
 
-Load image to Kind cluster:
+The launcher combines an operator-like module and the actual application logic.
+The example uses a simple http server as the application logic.
 
-```
-kind load docker-image ...
-kubectl run <name> --image=<image name> --image_pull_policy=IfNotPresent
-```
+## Preparation
 
+Make sure install dependencies described in the `README.md` file at the top of
+the repository.
+
+Then you can build and run the in-cluster launcher on the local kind cluster by
+running `build.sh`.
