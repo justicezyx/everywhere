@@ -5,6 +5,9 @@
 #metadata:
 #  name: <new-account-name>
 #  namespace: <namespace>
+#
+# This is needed such that the in-cluster executable, when running on k8s,
+# can access k8s resources.
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1

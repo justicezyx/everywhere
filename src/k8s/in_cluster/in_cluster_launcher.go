@@ -83,8 +83,8 @@ func mustCreateDeployment(clientset *kubernetes.Clientset) {
 					Containers: []apiv1.Container{
 						{
 							Name:  "web",
-							Image: "local/app",
-							ImagePullPolicy: apiv1.PullIfNotPresent,
+							Image: "localhost:5000/k8s:zyx",
+							ImagePullPolicy: apiv1.PullAlways,
 							Command: []string{"/app", "-role=worker"},
 							// For now ports are available, dont need to request them.
 						},
