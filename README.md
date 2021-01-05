@@ -19,14 +19,17 @@ Programming on single machine, cluster, and everywhere!
 
 ## TODO
 
-* Shell script to automate the build, deploy on local Kind cluster.
-* [Chris] Have a dedicated agent on K8s cluster to accept application
-  deployment requests.
-  * The development process during the development of k8s applications.
+* Shell script to automate the build, deploy on local Kind cluster. [DONE]
 * Continue on the service automation direction. For now.
   * Create service object.
   * Start auto-scaling.
 * Take a look at Operator framework.
+
+### Long term
+
+* [Chris] Have a dedicated agent on K8s cluster to accept application
+  deployment requests.
+  * The development process during the development of k8s applications.
 
 ## Discussion
 
