@@ -59,12 +59,11 @@ func mustCreateK8sClient() *kubernetes.Clientset {
 	return clientset
 }
 
-func mustCreateDeployment(clientset *kubernetes.Clientset) {
-	deploymentsClient := clientset.AppsV1().Deployments(apiv1.NamespaceDefault)
-
+func mustCreateDeployment(clientset *kubernetes.Clientset) *appsv1.Deployment {
 	deployment := &appsv1.Deployment{
 		ObjectMeta: metav1.ObjectMeta{
-			Name: "demo-deployment",
+			Name:      "demo-deployment",
+			Namespace: apiv1.NamespaceDefault,
 		},
 		Spec: appsv1.DeploymentSpec{
 			Replicas: int32Ptr(2),
@@ -82,10 +81,10 @@ func mustCreateDeployment(clientset *kubernetes.Clientset) {
 				Spec: apiv1.PodSpec{
 					Containers: []apiv1.Container{
 						{
-							Name:  "web",
-							Image: "localhost:5000/k8s:zyx",
+							Name:            "web",
+							Image:           "localhost:5000/k8s:zyx",
 							ImagePullPolicy: apiv1.PullAlways,
-							Command: []string{"/app", "-role=worker"},
+							Command:         []string{"/app", "-role=worker"},
 							// For now ports are available, dont need to request them.
 						},
 					},
@@ -96,29 +95,56 @@ func mustCreateDeployment(clientset *kubernetes.Clientset) {
 
 	// Create Deployment
 	fmt.Println("Creating deployment...")
+	deploymentsClient := clientset.AppsV1().Deployments(apiv1.NamespaceDefault)
 	result, err := deploymentsClient.Create(context.TODO(), deployment, metav1.CreateOptions{})
 	if err != nil {
 		panic(err)
 	}
 	fmt.Printf("Created deployment %q.\n", result.GetObjectMeta().GetName())
+
+	return deployment
+}
+
+func mustCreateService(clientset *kubernetes.Clientset, deployment *appsv1.Deployment) {
+	namespace := deployment.ObjectMeta.Namespace
+
+	fmt.Printf("namespace: %s", namespace)
+
+	service := &apiv1.Service{
+		ObjectMeta: metav1.ObjectMeta{
+			Name: deployment.ObjectMeta.Name + "-service",
+		},
+		Spec: apiv1.ServiceSpec{
+			Ports:    []apiv1.ServicePort{{Port: 80}},
+			Selector: map[string]string{"app": "demo"},
+		},
+	}
+
+	servicesClient := clientset.CoreV1().Services(namespace)
+
+	result, err := servicesClient.Create(context.TODO(), service, metav1.CreateOptions{})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("Created service %q.\n", result.GetObjectMeta().GetName())
 }
 
 func hello(w http.ResponseWriter, req *http.Request) {
-    fmt.Fprintf(w, "hello\n")
+	fmt.Fprintf(w, "hello\n")
 }
 
 func headers(w http.ResponseWriter, req *http.Request) {
-    for name, headers := range req.Header {
-        for _, h := range headers {
-            fmt.Fprintf(w, "%v: %v\n", name, h)
-        }
-    }
+	for name, headers := range req.Header {
+		for _, h := range headers {
+			fmt.Fprintf(w, "%v: %v\n", name, h)
+		}
+	}
 }
 
 func main2() {
-    http.HandleFunc("/hello", hello)
-    http.HandleFunc("/headers", headers)
-    http.ListenAndServe(":80", nil)
+	http.HandleFunc("/hello", hello)
+	http.HandleFunc("/headers", headers)
+	http.ListenAndServe(":80", nil)
 }
 
 func main() {
@@ -126,7 +152,8 @@ func main() {
 
 	if *role == "operator" {
 		clientset := mustCreateK8sClient()
-		mustCreateDeployment(clientset)
+		deployment := mustCreateDeployment(clientset)
+		mustCreateService(clientset, deployment)
 		select {}
 	}
 
